@@ -1,0 +1,36 @@
+.asistock-header {
+  background-color: #004b4d; /* Color verde oscuro basado en la imagen */
+  color: white;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+}
+
+.logo-img {
+  width: 40px;
+  height: auto;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.local-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: white;
+}
