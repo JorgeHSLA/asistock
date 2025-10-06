@@ -1,0 +1,42 @@
+.ventas-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+.bg-dark-green {
+    background-color: #004040 !important;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+}
+
+.spacer {
+    width: 100px;
+}
+
+@media (max-width: 768px) {
+    .spacer {
+        display: none;
+    }
+    
+    .search-container {
+        max-width: 100%;
+    }
+    
+    .brand-container {
+        margin-bottom: 10px;
+    }
+    
+    .d-flex {
+        flex-direction: column;
+    }
+}

@@ -239,6 +239,65 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Detalle de productos vendidos o comprados -->
+            @if ((isVenta() || isCompra()) && tieneProductos()) {
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="info-card bg-light p-3 rounded-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-cart-check me-2 text-primary"></i>
+                                <h5 class="mb-0">Detalle de Productos {{ isVenta() ? 'Vendidos' : 'Comprados' }}</h5>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Producto</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-end">Precio</th>
+                                            <th class="text-end">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (prod of getProductosDetalle(); track prod.id) {
+                                            <tr>
+                                                <td>{{ prod.id }}</td>
+                                                <td>{{ prod.nombre }}</td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-primary">{{ prod.cantidad }}</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    @if (prod.precio !== undefined) {
+                                                        ${{ prod.precio.toLocaleString('es-CO') }}
+                                                    } @else {
+                                                        --
+                                                    }
+                                                </td>
+                                                <td class="text-end">
+                                                    @if (prod.subtotal !== undefined) {
+                                                        ${{ prod.subtotal.toLocaleString('es-CO') }}
+                                                    } @else {
+                                                        --
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot class="table-group-divider">
+                                        <tr>
+                                            <td colspan="4" class="text-end fw-bold">Total:</td>
+                                            <td class="text-end fw-bold">${{ data.total?.toLocaleString('es-CO') }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 }

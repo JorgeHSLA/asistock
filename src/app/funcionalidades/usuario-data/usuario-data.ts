@@ -7,6 +7,7 @@ import { Estudiante } from '../../models/estudiante';
 import { Venta } from '../../models/venta';
 import { Compra } from '../../models/compra';
 import { Proveedor } from '../../models/proveedor';
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-usuario-data',
@@ -17,6 +18,11 @@ import { Proveedor } from '../../models/proveedor';
 })
 export class UsuarioData {
   @Input() data: any;
+  productos: Producto[] = [];
+  
+  constructor(private productoService: ProductoService) {
+    this.productos = this.productoService.getProductos();
+  }
 
   ngOnChanges() {
     if (this.data) {
@@ -92,5 +98,60 @@ export class UsuarioData {
     }
     
     return 0;
+  }
+  
+  // Obtener los detalles de los productos vendidos o comprados
+  getProductosDetalle(): { id: number, nombre: string, cantidad: number, precio?: number, subtotal?: number }[] {
+    if (!this.data) return [];
+    
+    let productosDetalle: { id: number, nombre: string, cantidad: number, precio?: number, subtotal?: number }[] = [];
+    
+    if (this.isVenta() && this.data.productosVendidos) {
+      Object.entries(this.data.productosVendidos).forEach(([idProducto, cantidad]) => {
+        const id = Number(idProducto);
+        const producto = this.productos.find(p => p.idProducto === id);
+        
+        if (producto) {
+          productosDetalle.push({
+            id,
+            nombre: producto.nombre || `Producto #${id}`,
+            cantidad: cantidad as number,
+            precio: producto.precio,
+            subtotal: producto.precio ? producto.precio * (cantidad as number) : undefined
+          });
+        } else {
+          productosDetalle.push({
+            id,
+            nombre: `Producto #${id}`,
+            cantidad: cantidad as number
+          });
+        }
+      });
+    }
+    
+    if (this.isCompra() && this.data.productosComprados) {
+      Object.entries(this.data.productosComprados).forEach(([idProducto, cantidad]) => {
+        const id = Number(idProducto);
+        const producto = this.productos.find(p => p.idProducto === id);
+        
+        if (producto) {
+          productosDetalle.push({
+            id,
+            nombre: producto.nombre || `Producto #${id}`,
+            cantidad: cantidad as number,
+            precio: producto.costo,
+            subtotal: producto.costo ? producto.costo * (cantidad as number) : undefined
+          });
+        } else {
+          productosDetalle.push({
+            id,
+            nombre: `Producto #${id}`,
+            cantidad: cantidad as number
+          });
+        }
+      });
+    }
+    
+    return productosDetalle;
   }
 }

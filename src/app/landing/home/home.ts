@@ -14,7 +14,7 @@ export class Home {
     Boxes = [
     { id: 1,type: 'big', data: { title: 'Historial Ventas', path: '/ventas', img: '/economia.png' } },
     { id: 2,type: 'big', data: { title: 'Nueva Venta', path: '/nueva-venta', img: '/economia.png' } },
-    { id: 3,type: 'big', data: { title: 'Historial Compra Proveedores', path: '/proveedores', img: '/economia.png' } },
+    { id: 3,type: 'big', data: { title: 'Historial Compra Proveedores', path: '/compras', img: '/economia.png' } },
     { id: 4,type: 'small', data: { title: 'Registrar Producto', path: '/registrar-producto', img: '/inventario.png' } },
     { id: 5,type: 'small', data: { title: 'Buscar Producto', path: '/productos', img: '/inventario.png' } },
     { id: 6,type: 'small', data: { title: 'Proveedores', path: '/proveedores', img: '/inventario.png' } }

@@ -1,0 +1,25 @@
+<section class="proveedores-page">
+      <div class="bg-dark-green shadow-sm mb-4">
+        <nav class="container-navbar py-3">
+          <div class="container">
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="search-container">
+                <app-navbar [list]="proveedoresAdaptados" (objectSelected)="onUserSelected($event)"></app-navbar>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <main class="container py-4">
+        <div class="row g-4">
+          <div class="col-12">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <app-usuario-data [data]="selectedProveedor"></app-usuario-data>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
