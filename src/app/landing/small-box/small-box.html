@@ -1,0 +1,13 @@
+<div class="small-box-container" [style.background-image]="'url(' + data?.data?.img + ')'" 
+     (click)="navigateTo(data?.data?.path)">
+  <div class="small-box-overlay">
+    <div class="small-box-content">
+      <div class="small-box-icon">
+        <!-- Icono de fondo ya está en el background-image -->
+      </div>
+      <div class="small-box-title">
+        <h4>{{ data?.data?.title }}</h4>
+      </div>
+    </div>
+  </div>
+</div>

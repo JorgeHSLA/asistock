@@ -1,0 +1,57 @@
+<div class="search-form-control">
+    <div class="input-group">
+        <span class="input-group-text search-icon">
+            <i class="bi bi-search"></i>
+        </span>
+        <input
+            type="text"
+            id="users"
+            class="form-control bg-transparent"
+            placeholder="Buscar..."
+            cdkOverlayOrigin
+            #autocomplete="cdkOverlayOrigin"
+            [formControl]="autoCompleteControl"
+            (focusin)="handleFocus()"
+            (focusout)="handleBlur()"
+        >
+    </div>
+</div>
+
+<ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="autocomplete"
+    [cdkConnectedOverlayOpen]="isOpen()"
+    [cdkConnectedOverlayHasBackdrop]="false"
+    [cdkConnectedOverlayPositions]="position"
+>
+    <div class="overlay-container">
+        <ul class="user-list">
+            @for(object of filteredList(); track object.id) {
+                <li (click)="selectUser(object)" class="user-item">
+                    @if (object.original?.activo !== undefined) {
+                        <i class="bi" [ngClass]="object.original.activo ? 'bi-box-seam-fill text-success' : 'bi-box text-danger'"></i>
+                    } @else if (object.original?.estado !== undefined) {
+                        <i class="bi" [ngClass]="object.original.estado === 'completada' ? 'bi-check-circle-fill text-success' : 'bi-clock text-warning'"></i>
+                    } @else {
+                        <i class="bi bi-box-seam text-primary"></i>
+                    }
+                    <div class="user-info">
+                        <span class="username">{{object.username}}</span>
+                        @if (object.original?.precio !== undefined) {
+                            <small class="text-muted">${{object.original.precio.toLocaleString('es-CO')}}</small>
+                        } @else if (object.original?.total !== undefined) {
+                            <small class="text-muted">${{object.original.total.toLocaleString('es-CO')}}</small>
+                        } @else if (object.original?.fecha !== undefined) {
+                            <small class="text-muted">{{object.original.fecha | date:'dd/MM/yyyy'}}</small>
+                        }
+                    </div>
+                </li>
+            } @empty {
+                <li class="text-muted text-center no-results">
+                    <i class="bi bi-search me-2"></i>
+                    No se encontraron resultados
+                </li>
+            }
+        </ul>
+    </div>
+</ng-template>

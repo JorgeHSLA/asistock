@@ -1,0 +1,42 @@
+.form-control {
+  display: flex;
+  flex-direction: column;
+  max-width: 290px;
+  margin-top: 150px;
+  margin-left: 150px;
+}
+
+.form-control input {
+  border-radius: 8px 8px 0 0;
+  padding: 8px 16px;
+  outline: 0;
+  border: 1px solid;
+  border-color: #424242;
+  z-index: 1001;
+}
+
+.form-control input:focus {
+  border-color: #2c2cc3;
+}
+
+.brand-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.brand-list li {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all ease 0.3s;
+}
+
+.brand-list li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.brand-list p {
+  padding: 8px 16px;
+}

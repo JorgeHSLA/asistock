@@ -1,0 +1,21 @@
+
+
+<div class="dashboard-layout">
+  <!-- Sección izquierda -->
+  <div class="left-section">
+    @for (box of Boxes; track box.id) {
+      @if (box.type  === 'big') {
+        <app-big-box [data]="box"></app-big-box>
+      }
+    }
+  </div>
+  
+  <!-- Sección derecha -->
+  <div class="right-section">
+    @for (box of Boxes; track box.id) {
+      @if (box.type === 'small') {
+        <app-small-box [data]="box"></app-small-box>
+      }
+    }
+  </div>
+</div>

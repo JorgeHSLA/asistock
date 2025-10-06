@@ -1,0 +1,244 @@
+@if (!data) {
+    <div class="alert alert-info d-flex align-items-center gap-2 py-3">
+        <i class="bi bi-exclamation-circle fs-4"></i>
+        <span>No se ha seleccionado ningún elemento</span>
+    </div>
+} @else {
+    <div class="data-card">
+        <!-- Encabezado con ID y nombre -->
+        <div class="card-header mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <!-- Icono según tipo de entidad -->
+                <div class="icon-container">
+                    @if (isProducto()) {
+                        <i class="bi bi-cart-fill display-4 text-success"></i>
+                    } @else if (isEstudiante()) {
+                        <i class="bi bi-mortarboard-fill display-4 text-primary"></i>
+                    } @else if (isVenta()) {
+                        <i class="bi bi-receipt display-4 text-warning"></i>
+                    } @else if (isCompra()) {
+                        <i class="bi bi-box-seam display-4 text-info"></i>
+                    } @else if (isProveedor()) {
+                        <i class="bi bi-building display-4 text-secondary"></i>
+                    } @else {
+                        <i class="bi bi-file-earmark display-4 text-dark"></i>
+                    }
+                </div>
+                <div>
+                    <!-- Título principal - usar getters si están disponibles -->
+                    <h3 class="mb-1">
+                        @if (data.nombreCompleto) {
+                            {{ data.nombreCompleto }}
+                        } @else if (data.nombreVenta) {
+                            {{ data.nombreVenta }}
+                        } @else if (data.nombreCompra) {
+                            {{ data.nombreCompra }}
+                        } @else if (data.nombre) {
+                            {{ data.nombre }}
+                        } @else if (data.idProducto) {
+                            Producto #{{ data.idProducto }}
+                        } @else if (data.idEstudiante) {
+                            Estudiante #{{ data.idEstudiante }}
+                        } @else if (data.idVenta) {
+                            Venta #{{ data.idVenta }}
+                        } @else if (data.idCompra) {
+                            Compra #{{ data.idCompra }}
+                        } @else if (data.idProvedor) {
+                            Proveedor #{{ data.idProvedor }}
+                        } @else {
+                            Item #{{ getIdValue() }}
+                        }
+                    </h3>
+                    
+                    <!-- Subtítulo secundario -->
+                    @if (data.curso) {
+                        <span class="text-muted">Curso: {{ data.curso }}</span>
+                    } @else if (data.cursoEstudiante) {
+                        <span class="text-muted">Curso: {{ data.cursoEstudiante }}</span>
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-details">
+            <div class="row g-4">
+                <!-- Primera columna de información -->
+                <div class="col-md-6">
+                    <div class="info-card bg-light p-3 rounded-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-info-circle me-2 text-primary"></i>
+                            <h5 class="mb-0">Información Principal</h5>
+                        </div>
+                        
+                        <!-- ID -->
+                        @if (getIdValue()) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">ID</span>
+                                <p class="mb-0">{{ getIdValue() }}</p>
+                            </div>
+                        }
+                        
+                        <!-- Nombre -->
+                        @if (data.nombre) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Nombre</span>
+                                <p class="mb-0">{{ data.nombre }}</p>
+                            </div>
+                        } @else if (data.nombreEstudiante) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Nombre del Estudiante</span>
+                                <p class="mb-0">{{ data.nombreEstudiante }}</p>
+                            </div>
+                        } @else if (data.nombreProveedor) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Nombre del Proveedor</span>
+                                <p class="mb-0">{{ data.nombreProveedor }}</p>
+                            </div>
+                        }
+                        
+                        <!-- Fecha -->
+                        @if (data.fecha) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Fecha</span>
+                                <p class="mb-0">{{ data.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+                            </div>
+                        } @else if (data.fechaCreacion) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Fecha de Creación</span>
+                                <p class="mb-0">{{ data.fechaCreacion | date:'dd/MM/yyyy' }}</p>
+                            </div>
+                        } @else if (data.fechaRegistro) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Fecha de Registro</span>
+                                <p class="mb-0">{{ data.fechaRegistro | date:'dd/MM/yyyy' }}</p>
+                            </div>
+                        }
+                        
+                        <!-- Email y teléfono (si existe) -->
+                        @if (data.correo) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Correo</span>
+                                <p class="mb-0">{{ data.correo }}</p>
+                            </div>
+                        }
+                        
+                        @if (data.telefono) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Teléfono</span>
+                                <p class="mb-0">{{ data.telefono }}</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                
+                <!-- Segunda columna de información -->
+                <div class="col-md-6">
+                    <div class="info-card bg-light p-3 rounded-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-clipboard-data me-2 text-primary"></i>
+                            <h5 class="mb-0">Detalles Específicos</h5>
+                        </div>
+                        
+                        <!-- Campos específicos de Producto -->
+                        @if (isProducto()) {
+                            @if (data.detalles) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Detalles</span>
+                                    <p class="mb-0">{{ data.detalles }}</p>
+                                </div>
+                            }
+                            @if (data.precio !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Precio</span>
+                                    <p class="mb-0">${{ data.precio?.toLocaleString('es-CO') }}</p>
+                                </div>
+                            }
+                            @if (data.costo !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Costo</span>
+                                    <p class="mb-0">${{ data.costo?.toLocaleString('es-CO') }}</p>
+                                </div>
+                            }
+                            @if (data.cantidad !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Cantidad</span>
+                                    <p class="mb-0">{{ data.cantidad }}</p>
+                                </div>
+                            }
+                            @if (data.activo !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Estado</span>
+                                    <p class="mb-0">
+                                        <span class="badge" [ngClass]="data.activo ? 'bg-success' : 'bg-danger'">
+                                            {{ data.activo ? 'Activo' : 'Inactivo' }}
+                                        </span>
+                                    </p>
+                                </div>
+                            }
+                        }
+                        
+                        <!-- Campos específicos de Estudiante -->
+                        @if (isEstudiante()) {
+                            @if (data.saldo !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Saldo</span>
+                                    <p class="mb-0">{{ data.saldoFormateado || ('$' + data.saldo?.toLocaleString('es-CO')) }}</p>
+                                </div>
+                            }
+                            @if (data.documentoRepresentante) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Documento Representante</span>
+                                    <p class="mb-0">{{ data.documentoRepresentante }}</p>
+                                </div>
+                            }
+                            @if (data.restricciones?.length) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Restricciones</span>
+                                    <p class="mb-0">{{ data.restricciones.length }} productos restringidos</p>
+                                </div>
+                            }
+                        }
+                        
+                        <!-- Campos específicos de Venta/Compra -->
+                        @if (isVenta() || isCompra()) {
+                            @if (data.total !== undefined) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Total</span>
+                                    <p class="mb-0">${{ data.total?.toLocaleString('es-CO') }}</p>
+                                </div>
+                            }
+                            @if (data.metodoPago) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Método de Pago</span>
+                                    <p class="mb-0">{{ data.metodoPago }}</p>
+                                </div>
+                            }
+                            @if (data.valorExtra !== undefined && data.valorExtra > 0) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Valor Extra</span>
+                                    <p class="mb-0">${{ data.valorExtra?.toLocaleString('es-CO') }}</p>
+                                </div>
+                            }
+                            @if (tieneProductos()) {
+                                <div class="info-item mb-2">
+                                    <span class="text-muted">Productos</span>
+                                    <p class="mb-0">
+                                        {{ getProductosCount() }} productos {{ isVenta() ? 'vendidos' : 'comprados' }}
+                                    </p>
+                                </div>
+                            }
+                        }
+                        
+                        <!-- Campos específicos de Proveedor -->
+                        @if (isProveedor()) {
+                            <div class="info-item mb-2">
+                                <span class="text-muted">Productos Suministrados</span>
+                                <p class="mb-0">{{ data.cantidadProductos || data.productos?.length || 0 }}</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
