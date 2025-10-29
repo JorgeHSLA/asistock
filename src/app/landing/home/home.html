@@ -1,21 +1,49 @@
-
-
-<div class="dashboard-layout">
-  <!-- Sección izquierda -->
-  <div class="left-section">
-    @for (box of Boxes; track box.id) {
-      @if (box.type  === 'big') {
-        <app-big-box [data]="box"></app-big-box>
-      }
+<div class="carousel-container">
+  <!-- Carrusel -->
+  <div class="carousel">
+    @for (slide of slides; track $index) {
+      <div class="dashboard-layout" [class.active]="currentSlide === $index">
+        <!-- Sección izquierda -->
+        <div class="left-section">
+          @for (box of slide; track box.id) {
+            @if (box.type === 'big') {
+              <app-big-box [data]="box.data"></app-big-box>
+            }
+          }
+        </div>
+        
+        <!-- Sección derecha -->
+        <div class="right-section">
+          @for (box of slide; track box.id) {
+            @if (box.type === 'small') {
+              <app-small-box [data]="box.data"></app-small-box>
+            }
+          }
+        </div>
+      </div>
     }
   </div>
-  
-  <!-- Sección derecha -->
-  <div class="right-section">
-    @for (box of Boxes; track box.id) {
-      @if (box.type === 'small') {
-        <app-small-box [data]="box"></app-small-box>
+
+  <!-- Controles del carrusel -->
+  <div class="carousel-controls">
+    <button class="carousel-button prev" (click)="prevSlide()" aria-label="Anterior">
+      ‹
+    </button>
+    
+    <!-- Indicadores -->
+    <div class="carousel-indicators">
+      @for (slide of slides; track $index) {
+        <button 
+          class="indicator" 
+          [class.active]="currentSlide === $index"
+          (click)="goToSlide($index)"
+          [attr.aria-label]="'Ir a pantalla ' + ($index + 1)">
+        </button>
       }
-    }
+    </div>
+    
+    <button class="carousel-button next" (click)="nextSlide()" aria-label="Siguiente">
+      ›
+    </button>
   </div>
 </div>
