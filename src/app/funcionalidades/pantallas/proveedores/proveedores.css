@@ -1,7 +1,7 @@
    .proveedores-page {
       min-height: 100vh;
       background-color: #f8f9fa;
-      padding-top: 80px; /* Espacio para el header fijo */
+      padding-top: 140px; /* Espacio para el header fijo */
     }
     
     .bg-dark-green {

@@ -26,13 +26,7 @@ export class NuevaVenta {
   ventaFecha: Date = new Date();
   estudiante: Estudiante | null = null;
   nombreCliente: string = '';
-  productosVenta: ProductoVenta[] = [
-    { producto: {} as Producto, cantidad: 0 },
-    { producto: {} as Producto, cantidad: 0 },
-    { producto: {} as Producto, cantidad: 0 },
-    { producto: {} as Producto, cantidad: 0 },
-    { producto: {} as Producto, cantidad: 0 }
-  ];
+  productosVenta: ProductoVenta[] = []; // Iniciar vacío
   
   // Listas disponibles
   estudiantes: Estudiante[] = [];
@@ -98,12 +92,32 @@ export class NuevaVenta {
     }
   }
 
+  // Agregar un nuevo producto vacío
+  agregarProducto() {
+    this.productosVenta.push({ 
+      producto: {} as Producto, 
+      cantidad: 0 
+    });
+  }
+
+  // Eliminar un producto de la lista
+  eliminarProducto(index: number) {
+    this.productosVenta.splice(index, 1);
+  }
+
   // Incrementar/decrementar cantidad
   cambiarCantidad(index: number, cambio: number) {
     const nuevaCantidad = this.productosVenta[index].cantidad + cambio;
     if (nuevaCantidad >= 0) {
       this.productosVenta[index].cantidad = nuevaCantidad;
     }
+  }
+
+  // Limpiar selección de estudiante (para escribir nombre manual)
+  limpiarEstudiante() {
+    this.estudiante = null;
+    this.busquedaEstudiante = '';
+    this.mostrarListaEstudiantes = false;
   }
 
   // Terminar venta

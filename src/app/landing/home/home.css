@@ -6,6 +6,7 @@
   min-height: 0;
   max-height: none;
   margin: 0 auto; /* Centrar el carrusel */
+  margin-top: 140px; /* Espacio para el header fijo */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -154,6 +155,7 @@
     min-height: 0;
     max-height: none;
     width: 90vw;
+    margin-top: 140px; /* Mantener espacio para el header fijo en móvil */
   }
   .carousel-button {
     width: 45px;

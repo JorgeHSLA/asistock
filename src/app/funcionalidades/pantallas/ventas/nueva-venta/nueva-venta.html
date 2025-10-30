@@ -14,59 +14,93 @@
 
     <!-- Sección de productos -->
     <div class="productos-section">
-      <h3 class="section-title">Productos</h3>
-      <div class="productos-list">
+      <div class="section-header">
+        <h3 class="section-title">Productos</h3>
+        <button class="btn-agregar-producto" (click)="agregarProducto()">
+          <span class="icon">+</span> Agregar Producto
+        </button>
+      </div>
+      
+      <div class="productos-list" *ngIf="productosVenta.length > 0">
         <div *ngFor="let pv of productosVenta; let i = index" class="producto-row">
-          <div class="producto-selector">
-            <select 
-              class="form-select producto-select"
-              [(ngModel)]="pv.producto.idProducto"
-              (change)="onProductoChange(i, $event)"
-            >
-              <option [value]="undefined">Producto {{ i + 1 }}</option>
-              <option *ngFor="let prod of productos" [value]="prod.idProducto">
-                {{ prod.nombre }}
-              </option>
-            </select>
-          </div>
-          
-          <div class="cantidad-control">
-            <button class="btn-cantidad" (click)="cambiarCantidad(i, -1)">−</button>
-            <input 
-              type="number" 
-              class="cantidad-input" 
-              [(ngModel)]="pv.cantidad"
-              min="0"
-              readonly
-            >
-            <button class="btn-cantidad" (click)="cambiarCantidad(i, 1)">+</button>
+          <div class="producto-content">
+            <div class="producto-selector">
+              <select 
+                class="form-select producto-select"
+                [(ngModel)]="pv.producto.idProducto"
+                (change)="onProductoChange(i, $event)"
+              >
+                <option [value]="undefined">Seleccionar producto</option>
+                <option *ngFor="let prod of productos" [value]="prod.idProducto">
+                  {{ prod.nombre }} - ${{ prod.precio?.toLocaleString('es-CO') }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="cantidad-control">
+              <button class="btn-cantidad" (click)="cambiarCantidad(i, -1)">−</button>
+              <input 
+                type="number" 
+                class="cantidad-input" 
+                [(ngModel)]="pv.cantidad"
+                min="0"
+                readonly
+              >
+              <button class="btn-cantidad" (click)="cambiarCantidad(i, 1)">+</button>
+            </div>
+
+            <div class="subtotal-info">
+              <span class="subtotal-label">Subtotal:</span>
+              <span class="subtotal-value">${{ (pv.producto.precio || 0) * pv.cantidad | number:'1.0-0' }}</span>
+            </div>
           </div>
 
-          <div class="precio-info">
-            <span class="label-cantidad">Cantidad producto {{ i + 1 }}</span>
-          </div>
+          <button class="btn-eliminar" (click)="eliminarProducto(i)" title="Eliminar producto">
+            <span class="icon">🗑️</span>
+          </button>
         </div>
+      </div>
+
+      <div class="empty-productos" *ngIf="productosVenta.length === 0">
+        <p>No hay productos agregados. Haz clic en "Agregar Producto" para comenzar.</p>
       </div>
     </div>
 
     <!-- Nombre del cliente -->
     <div class="cliente-section">
+      <div class="cliente-header">
+        <h3 class="section-title">Cliente</h3>
+        <button 
+          class="btn-limpiar" 
+          *ngIf="estudiante" 
+          (click)="limpiarEstudiante()"
+          title="Escribir nombre manualmente"
+        >
+          ✕ Limpiar
+        </button>
+      </div>
+
       <div class="input-group">
         <input 
           type="text" 
           class="form-control cliente-input"
           [(ngModel)]="busquedaEstudiante"
           (input)="filtrarEstudiantes()"
-          (focus)="mostrarListaEstudiantes = true"
-          placeholder="Nombre del cliente"
+          (focus)="mostrarListaEstudiantes = busquedaEstudiante.length > 0"
+          placeholder="Buscar estudiante o escribir nombre del cliente"
         >
-        <button class="btn-add">
-          <span class="icon">+</span>−
-        </button>
+      </div>
+
+      <!-- Etiqueta si es estudiante seleccionado -->
+      <div class="estudiante-seleccionado" *ngIf="estudiante">
+        <span class="tag-estudiante">
+          Estudiante: {{ estudiante.nombre }} ({{ estudiante.curso }})
+          <span class="saldo-tag">Saldo: ${{ estudiante.saldo?.toLocaleString('es-CO') }}</span>
+        </span>
       </div>
       
       <!-- Lista de estudiantes filtrados -->
-      <div class="estudiantes-dropdown" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length > 0">
+      <div class="estudiantes-dropdown" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length > 0 && !estudiante">
         <div 
           *ngFor="let est of estudiantesFiltrados" 
           class="estudiante-item"
