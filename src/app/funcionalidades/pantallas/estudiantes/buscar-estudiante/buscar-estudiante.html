@@ -1,0 +1,43 @@
+<div class="buscar-container">
+  <!-- header eliminado, solo queda el global -->
+
+  <div class="content">
+    <div class="search-section">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="terminoBusqueda"
+          (input)="buscarEstudiante()"
+          placeholder="Buscar Estudiante"
+          class="search-input"
+        >
+        <button class="search-button">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="estudiantes-list">
+      <div 
+        *ngFor="let estudiante of estudiantesFiltrados" 
+        class="estudiante-item"
+        (click)="editarEstudiante(estudiante.idEstudiante)"
+      >
+        <div class="estudiante-icon">
+          <span>👤</span>
+        </div>
+        <div class="estudiante-info">
+          <h3>Nombre estudiante</h3>
+          <p>Puntos</p>
+        </div>
+        <button class="edit-button" (click)="editarEstudiante(estudiante.idEstudiante); $event.stopPropagation()">
+          <span class="icon">✏️</span>
+        </button>
+      </div>
+
+      <div *ngIf="estudiantesFiltrados.length === 0" class="no-estudiantes">
+        <p>No se encontraron estudiantes</p>
+      </div>
+    </div>
+  </div>
+</div>

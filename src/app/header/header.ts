@@ -23,6 +23,9 @@ export class Header {
     if (url.includes('/registrar-producto')) return 'Registrar Producto';
     if (url.includes('/buscar-producto')) return 'Buscar Producto';
     if (url.includes('/editar-producto')) return 'Editar Producto';
+    if (url.includes('/registrar-estudiante')) return 'Registrar Estudiante';
+    if (url.includes('/buscar-estudiante')) return 'Buscar Estudiante';
+    if (url.includes('/editar-estudiante')) return 'Editar Estudiante';
     if (url.includes('/productos')) return 'Productos';
     if (url.includes('/ventas')) return 'Ventas';
     if (url.includes('/compras')) return 'Compras';
