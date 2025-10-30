@@ -11,6 +11,7 @@ import { RegistrarEstudiante } from './funcionalidades/pantallas/estudiantes/reg
 import { BuscarEstudiante } from './funcionalidades/pantallas/estudiantes/buscar-estudiante/buscar-estudiante';
 import { EditarEstudiante } from './funcionalidades/pantallas/estudiantes/editar-estudiante/editar-estudiante';
 import { NuevaVenta } from './funcionalidades/pantallas/ventas/nueva-venta/nueva-venta';
+import { Alarmas } from './funcionalidades/pantallas/alarmas/alarmas';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,4 +27,5 @@ export const routes: Routes = [
     { path: 'nueva-venta', component: NuevaVenta },
     { path: 'compras', component: Compras },
     { path: 'proveedores', component: Proveedores },
+    { path: 'alarmas', component: Alarmas },
 ];

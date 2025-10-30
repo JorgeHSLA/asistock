@@ -96,7 +96,7 @@ export class NuevaVenta {
   agregarProducto() {
     this.productosVenta.push({ 
       producto: {} as Producto, 
-      cantidad: 0 
+        cantidad: 1 
     });
   }
 
@@ -108,7 +108,7 @@ export class NuevaVenta {
   // Incrementar/decrementar cantidad
   cambiarCantidad(index: number, cambio: number) {
     const nuevaCantidad = this.productosVenta[index].cantidad + cambio;
-    if (nuevaCantidad >= 0) {
+    if (nuevaCantidad >= 1) {
       this.productosVenta[index].cantidad = nuevaCantidad;
     }
   }

@@ -1,0 +1,99 @@
+<div class="alarmas-container">
+  <div class="content">
+    <div class="search-section">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="terminoBusqueda"
+          (input)="buscarAlarma()"
+          placeholder="Buscar alarma"
+          class="search-input"
+        >
+        <button class="search-button">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de alarmas -->
+    <div class="alarmas-list">
+      <div 
+        *ngFor="let alarma of alarmasFiltradas" 
+        class="alarma-item"
+        [class.editing]="modoEdicion === alarma.idAlarma"
+      >
+        <div class="alarma-content" *ngIf="modoEdicion !== alarma.idAlarma">
+          <div class="alarma-header">
+            <h3>{{ alarma.titulo }}</h3>
+            <div class="alarma-actions">
+              <button class="edit-button" (click)="editarAlarma(alarma)" title="Editar">
+                <span class="icon">✏️</span>
+              </button>
+              <button class="delete-button" (click)="eliminarAlarma(alarma.idAlarma)" title="Eliminar">
+                <span class="icon">🗑️</span>
+              </button>
+            </div>
+          </div>
+          <p class="alarma-descripcion">{{ alarma.descripcion }}</p>
+        </div>
+
+        <!-- Modo edición -->
+        <div class="alarma-edit" *ngIf="modoEdicion === alarma.idAlarma">
+          <div class="form-group">
+            <label>Título:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="alarmaEditando.titulo"
+              class="edit-input"
+            >
+          </div>
+          <div class="form-group">
+            <label>Descripción:</label>
+            <textarea 
+              [(ngModel)]="alarmaEditando.descripcion"
+              class="edit-textarea"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="edit-actions">
+            <button class="btn-guardar" (click)="guardarEdicion()">Guardar</button>
+            <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="alarmasFiltradas.length === 0" class="no-alarmas">
+        <p>No se encontraron alarmas</p>
+      </div>
+    </div>
+
+    <!-- Botón para agregar nueva alarma -->
+    <div class="add-section">
+      <button class="btn-add" (click)="agregarNuevaAlarma()">
+        <span class="icon-plus">+</span>
+        <span class="icon-minus">−</span>
+      </button>
+    </div>
+
+    <!-- Alarmas automáticas del sistema -->
+    <div class="alarmas-automaticas">
+      <h2>Configuración automática</h2>
+      <div class="auto-alarmas-list">
+        <div 
+          *ngFor="let alarmaAuto of alarmasAutomaticas" 
+          class="auto-alarma-item"
+        >
+          <label class="checkbox-container">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="alarmaAuto.activa"
+              (change)="toggleAlarmaAutomatica(alarmaAuto)"
+            >
+            <span class="checkmark"></span>
+            <span class="auto-alarma-text">{{ alarmaAuto.descripcion }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

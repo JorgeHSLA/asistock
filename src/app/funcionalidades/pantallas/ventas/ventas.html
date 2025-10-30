@@ -1,28 +1,48 @@
-<section class="ventas-page">
-    <div class="bg-dark-green shadow-sm mb-4">
-        <nav class="container-navbar py-3">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-                    <button class="btn-nueva-venta" (click)="navegarNuevaVenta()">
-                        <span class="icon">+</span> Nueva venta
-                    </button>
-                    <div class="search-container">
-                        <app-navbar [list]="ventasAdaptadas" (objectSelected)="onUserSelected($event)"></app-navbar>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<div class="ventas-container">
+  <div class="content">
+    <div class="search-section">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="terminoBusqueda"
+          (input)="buscarVenta()"
+          placeholder="Buscar venta"
+          class="search-input"
+        >
+        <button class="search-button">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
     </div>
 
-    <main class="container py-4">
-        <div class="row g-4">
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <app-usuario-data [data]="selectedVenta"></app-usuario-data>
-                    </div>
-                </div>
-            </div>
+    <div class="nueva-venta-section">
+      <button class="btn-nueva-venta" (click)="navegarNuevaVenta()">
+        <span class="icon">+</span> Nueva venta
+      </button>
+    </div>
+
+    <div class="ventas-list">
+      <div 
+        *ngFor="let venta of ventasFiltradas" 
+        class="venta-item"
+        (click)="verDetalleVenta(venta)"
+      >
+        <div class="venta-icon">
+          <span>🧾</span>
         </div>
-    </main>
-</section>
+        <div class="venta-info">
+          <h3>{{ venta.nombreEstudiante }}</h3>
+          <p class="fecha">{{ formatearFecha(venta.fecha) }}</p>
+          <p class="total">Total: ${{ venta.total }}</p>
+        </div>
+        <button class="edit-button" (click)="verDetalleVenta(venta); $event.stopPropagation()">
+          <span class="icon">✏️</span>
+        </button>
+      </div>
+
+      <div *ngIf="ventasFiltradas.length === 0" class="no-ventas">
+        <p>No se encontraron ventas</p>
+      </div>
+    </div>
+  </div>
+</div>
