@@ -220,11 +220,20 @@ export class VentaService {
         5: 1, // 1 Jugo de Naranja
         8: 1 // 1 Té Verde
       }
-    }),
+    })
     ];
   }
 
   getVentas(): Venta[] {
     return this.ventas;
+  }
+
+  agregarVenta(venta: Venta): void {
+    // Obtener el último ID y asignar el siguiente
+    const ultimoId = this.ventas.length > 0 
+      ? Math.max(...this.ventas.map(v => v.idVenta || 0))
+      : 0;
+    venta.idVenta = ultimoId + 1;
+    this.ventas.push(venta);
   }
 }

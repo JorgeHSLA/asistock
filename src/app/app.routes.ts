@@ -10,6 +10,7 @@ import { EditarProducto } from './funcionalidades/pantallas/productos/editar-pro
 import { RegistrarEstudiante } from './funcionalidades/pantallas/estudiantes/registrar-estudiante/registrar-estudiante';
 import { BuscarEstudiante } from './funcionalidades/pantallas/estudiantes/buscar-estudiante/buscar-estudiante';
 import { EditarEstudiante } from './funcionalidades/pantallas/estudiantes/editar-estudiante/editar-estudiante';
+import { NuevaVenta } from './funcionalidades/pantallas/ventas/nueva-venta/nueva-venta';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'buscar-estudiante', component: BuscarEstudiante },
     { path: 'editar-estudiante/:id', component: EditarEstudiante },
     { path: 'ventas', component: Ventas },
+    { path: 'nueva-venta', component: NuevaVenta },
     { path: 'compras', component: Compras },
     { path: 'proveedores', component: Proveedores },
 ];

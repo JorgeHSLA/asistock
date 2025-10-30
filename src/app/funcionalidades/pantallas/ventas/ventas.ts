@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Navbar } from '../../../funcionalidades/navbar/navbar';
 import { VentaService } from '../../../services/venta.service';
 import { Venta } from '../../../models/venta';
@@ -19,7 +20,10 @@ export class Ventas {
 
   ventasAdaptadas: any[] = [];
 
-  constructor(private ventaService: VentaService) {
+  constructor(
+    private ventaService: VentaService,
+    private router: Router
+  ) {
     // Obtener las ventas del servicio
     this.ventas = this.ventaService.getVentas();
     
@@ -56,5 +60,9 @@ export class Ventas {
     }
     
     return this.selectedVenta;
+  }
+
+  navegarNuevaVenta() {
+    this.router.navigate(['/nueva-venta']);
   }
 }

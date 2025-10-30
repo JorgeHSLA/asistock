@@ -1,0 +1,264 @@
+.nueva-venta-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+  padding-top: 100px; /* Espacio para el header fijo */
+}
+
+.venta-content {
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.venta-header {
+  background-color: #004b4d;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.venta-info, .saldo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.saldo-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.saldo-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.productos-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.productos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.producto-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.producto-selector {
+  grid-column: 1 / -1;
+}
+
+.producto-select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.producto-select:focus {
+  outline: none;
+  border-color: #004b4d;
+}
+
+.cantidad-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-cantidad {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #004b4d;
+  background-color: white;
+  color: #004b4d;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-cantidad:hover {
+  background-color: #004b4d;
+  color: white;
+}
+
+.cantidad-input {
+  width: 60px;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.precio-info {
+  display: flex;
+  align-items: center;
+}
+
+.label-cantidad {
+  font-size: 14px;
+  color: #666;
+}
+
+.cliente-section {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.cliente-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.cliente-input:focus {
+  outline: none;
+  border-color: #004b4d;
+}
+
+.btn-add {
+  width: 50px;
+  height: 48px;
+  background-color: #004b4d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+  background-color: #00797c;
+}
+
+.estudiantes-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 50px;
+  background-color: white;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.estudiante-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.estudiante-item:last-child {
+  border-bottom: none;
+}
+
+.estudiante-item:hover {
+  background-color: #f5f5f5;
+}
+
+.saldo-estudiante {
+  color: #004b4d;
+  font-weight: 600;
+}
+
+.footer-section {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-terminar {
+  width: 100%;
+  padding: 15px;
+  background-color: #004b4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-terminar:hover {
+  background-color: #00797c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nueva-venta-container {
+    padding: 10px;
+  }
+
+  .venta-content {
+    padding: 20px;
+  }
+
+  .producto-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cantidad-control {
+    justify-content: center;
+  }
+}

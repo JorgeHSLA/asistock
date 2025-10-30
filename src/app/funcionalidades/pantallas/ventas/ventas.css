@@ -2,16 +2,43 @@
     background-color: #f8f9fa;
     min-height: 100vh;
     padding-bottom: 40px;
+    padding-top: 80px; /* Espacio para el header fijo */
 }
 
 .bg-dark-green {
     background-color: #004040 !important;
 }
 
+.btn-nueva-venta {
+    background-color: #fff;
+    color: #004b4d;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nueva-venta:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-nueva-venta .icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .search-container {
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
 }
 
 .brand-container {

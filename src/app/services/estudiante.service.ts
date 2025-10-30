@@ -128,4 +128,13 @@ export class EstudianteService {
       e.curso?.toLowerCase().includes(terminoLower)
     );
   }
+
+  actualizarSaldo(idEstudiante: number, nuevoSaldo: number): boolean {
+    const estudiante = this.estudiantes.find(e => e.idEstudiante === idEstudiante);
+    if (estudiante) {
+      estudiante.saldo = nuevoSaldo;
+      return true;
+    }
+    return false;
+  }
 }

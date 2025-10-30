@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -12,11 +12,24 @@ import { Router, RouterModule } from '@angular/router';
 export class Header {
   pageTitle: string = 'Nombre Local Actual';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private location: Location
+  ) {
     this.router.events.subscribe(() => {
       this.pageTitle = this.getPageTitle(this.router.url);
     });
     this.pageTitle = this.getPageTitle(this.router.url);
+  }
+
+  // Verificar si debe mostrar el botón de volver
+  get mostrarBotonVolver(): boolean {
+    return !this.router.url.includes('/home');
+  }
+
+  // Volver a la página anterior
+  volver(): void {
+    this.location.back();
   }
 
   getPageTitle(url: string): string {
@@ -27,6 +40,7 @@ export class Header {
     if (url.includes('/buscar-estudiante')) return 'Buscar Estudiante';
     if (url.includes('/editar-estudiante')) return 'Editar Estudiante';
     if (url.includes('/productos')) return 'Productos';
+    if (url.includes('/nueva-venta')) return 'Nueva venta';
     if (url.includes('/ventas')) return 'Ventas';
     if (url.includes('/compras')) return 'Compras';
     if (url.includes('/proveedores')) return 'Proveedores';

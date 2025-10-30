@@ -1,0 +1,88 @@
+<div class="nueva-venta-container">
+  <div class="venta-content">
+    <!-- Encabezado con fecha y saldo -->
+    <div class="venta-header">
+      <div class="venta-info">
+        <span class="label">Venta#</span>
+        <span class="label">- Fecha</span>
+      </div>
+      <div class="saldo-info">
+        <span class="saldo-label">Venta#</span>
+        <span class="saldo-value">${{ totalVenta.toLocaleString('es-CO') }}</span>
+      </div>
+    </div>
+
+    <!-- Sección de productos -->
+    <div class="productos-section">
+      <h3 class="section-title">Productos</h3>
+      <div class="productos-list">
+        <div *ngFor="let pv of productosVenta; let i = index" class="producto-row">
+          <div class="producto-selector">
+            <select 
+              class="form-select producto-select"
+              [(ngModel)]="pv.producto.idProducto"
+              (change)="onProductoChange(i, $event)"
+            >
+              <option [value]="undefined">Producto {{ i + 1 }}</option>
+              <option *ngFor="let prod of productos" [value]="prod.idProducto">
+                {{ prod.nombre }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="cantidad-control">
+            <button class="btn-cantidad" (click)="cambiarCantidad(i, -1)">−</button>
+            <input 
+              type="number" 
+              class="cantidad-input" 
+              [(ngModel)]="pv.cantidad"
+              min="0"
+              readonly
+            >
+            <button class="btn-cantidad" (click)="cambiarCantidad(i, 1)">+</button>
+          </div>
+
+          <div class="precio-info">
+            <span class="label-cantidad">Cantidad producto {{ i + 1 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nombre del cliente -->
+    <div class="cliente-section">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control cliente-input"
+          [(ngModel)]="busquedaEstudiante"
+          (input)="filtrarEstudiantes()"
+          (focus)="mostrarListaEstudiantes = true"
+          placeholder="Nombre del cliente"
+        >
+        <button class="btn-add">
+          <span class="icon">+</span>−
+        </button>
+      </div>
+      
+      <!-- Lista de estudiantes filtrados -->
+      <div class="estudiantes-dropdown" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length > 0">
+        <div 
+          *ngFor="let est of estudiantesFiltrados" 
+          class="estudiante-item"
+          (click)="seleccionarEstudiante(est)"
+        >
+          <span>{{ est.nombre }} - {{ est.curso }}</span>
+          <span class="saldo-estudiante">${{ est.saldo?.toLocaleString('es-CO') }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón terminar -->
+    <div class="footer-section">
+      <button class="btn-terminar" (click)="terminarVenta()">
+        Terminar
+      </button>
+    </div>
+  </div>
+</div>

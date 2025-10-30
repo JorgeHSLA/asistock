@@ -218,4 +218,13 @@ export class ProductoService {
       p.detalles?.toLowerCase().includes(terminoLower)
     );
   }
+
+  actualizarCantidad(idProducto: number, cambio: number): boolean {
+    const producto = this.productos.find(p => p.idProducto === idProducto);
+    if (producto && producto.cantidad !== undefined) {
+      producto.cantidad += cambio;
+      return true;
+    }
+    return false;
+  }
 }

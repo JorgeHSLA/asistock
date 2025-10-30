@@ -2,7 +2,10 @@
     <div class="bg-dark-green shadow-sm mb-4">
         <nav class="container-navbar py-3">
             <div class="container">
-                <div class="d-flex justify-content-center align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn-nueva-venta" (click)="navegarNuevaVenta()">
+                        <span class="icon">+</span> Nueva venta
+                    </button>
                     <div class="search-container">
                         <app-navbar [list]="ventasAdaptadas" (objectSelected)="onUserSelected($event)"></app-navbar>
                     </div>

@@ -3,6 +3,12 @@
   color: white;
   padding: 10px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
 .logo-container {
@@ -39,4 +45,29 @@
   font-size: 1.8rem;
   font-weight: 500;
   color: white;
+}
+
+.btn-volver-header {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  margin-right: 20px;
+}
+
+.btn-volver-header:hover {
+  background-color: white;
+  color: #004b4d;
+}
+
+.btn-volver-header .icon {
+  font-size: 18px;
 }
