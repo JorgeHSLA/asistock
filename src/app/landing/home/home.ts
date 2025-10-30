@@ -24,7 +24,7 @@ export class Home {
   // Pantalla 2: Registrar Producto, Buscar Producto, Creacion Combos, Nueva venta, Panel de Reportes y Estadísticas
   slide2 = [
     { id: 6, type: 'small', data: { title: 'Registrar Producto', path: '/registrar-producto', img: '/inventario.png' } },
-    { id: 7, type: 'small', data: { title: 'Buscar Producto', path: '/productos', img: '/inventario.png' } },
+    { id: 7, type: 'small', data: { title: 'Buscar Producto', path: '/buscar-producto', img: '/inventario.png' } },
     { id: 8, type: 'small', data: { title: 'Creacion Combos', path: '/combos', img: '/inventario.png' } },
     { id: 9, type: 'big', data: { title: 'Nueva venta', path: '/nueva-venta', img: '/economia.png' } },
     { id: 10, type: 'big', data: { title: 'Panel de Reportes y Estadísticas', path: '/reportes', img: '/economia.png' } }

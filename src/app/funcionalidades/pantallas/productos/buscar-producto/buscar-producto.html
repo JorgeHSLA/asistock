@@ -1,0 +1,43 @@
+<div class="buscar-container">
+  <!-- header eliminado, solo queda el global -->
+
+  <div class="content">
+    <div class="search-section">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="terminoBusqueda"
+          (input)="buscarProducto()"
+          placeholder="Buscar Producto"
+          class="search-input"
+        >
+        <button class="search-button">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="productos-list">
+      <div 
+        *ngFor="let producto of productosFiltrados" 
+        class="producto-item"
+        (click)="editarProducto(producto.idProducto)"
+      >
+        <div class="producto-icon">
+          <span>📦</span>
+        </div>
+        <div class="producto-info">
+          <h3>{{ producto.nombre }} - ${{ producto.precio?.toLocaleString() }}</h3>
+          <p>Cantidad de productos: {{ producto.cantidad }}</p>
+        </div>
+        <button class="edit-button" (click)="editarProducto(producto.idProducto); $event.stopPropagation()">
+          <span class="icon">✏️</span>
+        </button>
+      </div>
+
+      <div *ngIf="productosFiltrados.length === 0" class="no-productos">
+        <p>No se encontraron productos</p>
+      </div>
+    </div>
+  </div>
+</div>

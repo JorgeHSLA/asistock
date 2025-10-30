@@ -168,4 +168,54 @@ export class ProductoService {
   getProductos(): Producto[] {
     return this.productos;
   }
+
+  getProductoById(id: number): Producto | undefined {
+    return this.productos.find(p => p.idProducto === id);
+  }
+
+  createProducto(producto: Producto): Producto {
+    const newId = this.productos.length > 0 
+      ? Math.max(...this.productos.map(p => p.idProducto || 0)) + 1 
+      : 1;
+    
+    const nuevoProducto: Producto = {
+      ...producto,
+      idProducto: newId,
+      fechaCreacion: new Date(),
+      activo: true
+    };
+    
+    this.productos.push(nuevoProducto);
+    return nuevoProducto;
+  }
+
+  updateProducto(id: number, producto: Producto): Producto | undefined {
+    const index = this.productos.findIndex(p => p.idProducto === id);
+    if (index !== -1) {
+      this.productos[index] = {
+        ...this.productos[index],
+        ...producto,
+        idProducto: id // Mantener el ID original
+      };
+      return this.productos[index];
+    }
+    return undefined;
+  }
+
+  deleteProducto(id: number): boolean {
+    const index = this.productos.findIndex(p => p.idProducto === id);
+    if (index !== -1) {
+      this.productos.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+
+  buscarProductos(termino: string): Producto[] {
+    const terminoLower = termino.toLowerCase();
+    return this.productos.filter(p => 
+      p.nombre?.toLowerCase().includes(terminoLower) ||
+      p.detalles?.toLowerCase().includes(terminoLower)
+    );
+  }
 }
