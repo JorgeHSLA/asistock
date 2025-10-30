@@ -27,8 +27,8 @@
           <span>👤</span>
         </div>
         <div class="estudiante-info">
-          <h3>Nombre estudiante</h3>
-          <p>Puntos</p>
+         <h3>{{ estudiante.nombre }}</h3>
+         <p>{{ estudiante.saldo }}</p>
         </div>
         <button class="edit-button" (click)="editarEstudiante(estudiante.idEstudiante); $event.stopPropagation()">
           <span class="icon">✏️</span>
