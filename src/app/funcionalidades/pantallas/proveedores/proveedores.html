@@ -1,25 +1,198 @@
-<section class="proveedores-page">
-      <div class="bg-dark-green shadow-sm mb-4">
-        <nav class="container-navbar py-3">
-          <div class="container">
-            <div class="d-flex justify-content-center align-items-center">
-              <div class="search-container">
-                <app-navbar [list]="proveedoresAdaptados" (objectSelected)="onUserSelected($event)"></app-navbar>
-              </div>
-            </div>
-          </div>
-        </nav>
+<div class="proveedores-container">
+  <div class="header-section">
+    <h1>Proveedores</h1>
+    <div class="header-actions">
+      <button class="btn-toggle-vista" (click)="cambiarVista()">
+        <span *ngIf="vistaActual === 'carrusel'">📋 Ver Tabla</span>
+        <span *ngIf="vistaActual === 'tabla'">🎠 Ver Carrusel</span>
+      </button>
+      <button class="btn-agregar" (click)="abrirModalAgregar()">
+        <span class="icon">+</span> Agregar Proveedor
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista Carrusel -->
+  <div class="carrusel-container" *ngIf="vistaActual === 'carrusel' && proveedores.length > 0">
+    <button class="btn-nav btn-prev" (click)="cambiarProveedor(-1)">
+      <span>‹</span>
+    </button>
+
+    <div class="carrusel-content">
+      <!-- Tarjetas laterales (previo y siguiente) -->
+      <div class="proveedor-card card-lateral card-izquierda">
+        <div class="card-icon">
+          <span>🐛</span>
+        </div>
+        <h3>{{ proveedores[(indiceActual - 1 + proveedores.length) % proveedores.length].nombre }}</h3>
+        <p>{{ proveedores[(indiceActual - 1 + proveedores.length) % proveedores.length].correo || 'Sin correo' }}</p>
       </div>
 
-      <main class="container py-4">
-        <div class="row g-4">
-          <div class="col-12">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <app-usuario-data [data]="selectedProveedor"></app-usuario-data>
-              </div>
+      <!-- Tarjeta central (proveedor actual) -->
+      <div class="proveedor-card card-central" *ngIf="proveedorActual">
+        <div class="card-icon">
+          <span>🐛</span>
+        </div>
+        <h2>{{ proveedorActual.nombre }}</h2>
+        <p class="empresa">{{ proveedorActual.correo || 'Sin correo' }}</p>
+        
+        <div class="card-actions">
+          <button class="btn-action btn-contactar" (click)="abrirModalContactar()">
+            <span class="icon">📞</span> Contactar Proveedor
+          </button>
+          <button class="btn-action btn-editar" (click)="abrirModalEditar()">
+            <span class="icon">✏️</span> Editar Datos del Proveedor
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjeta derecha -->
+      <div class="proveedor-card card-lateral card-derecha">
+        <div class="card-icon">
+          <span>🐛</span>
+        </div>
+        <h3>{{ proveedores[(indiceActual + 1) % proveedores.length].nombre }}</h3>
+        <p>{{ proveedores[(indiceActual + 1) % proveedores.length].correo || 'Sin correo' }}</p>
+      </div>
+    </div>
+
+    <button class="btn-nav btn-next" (click)="cambiarProveedor(1)">
+      <span>›</span>
+    </button>
+  </div>
+
+  <!-- Vista Tabla -->
+  <div class="tabla-container" *ngIf="vistaActual === 'tabla'">
+    <table class="tabla-proveedores">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Productos</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of proveedores">
+          <td>{{ proveedor.idProvedor }}</td>
+          <td>{{ proveedor.nombre }}</td>
+          <td>{{ proveedor.correo || 'N/A' }}</td>
+          <td>{{ proveedor.telefono || 'N/A' }}</td>
+          <td>{{ proveedor.cantidadProductos }}</td>
+          <td class="acciones-cell">
+            <button class="btn-tabla btn-ver" (click)="proveedorActual = proveedor; indiceActual = proveedores.indexOf(proveedor); cambiarVista()" title="Ver en carrusel">
+              👁️
+            </button>
+            <button class="btn-tabla btn-editar-tabla" (click)="proveedorActual = proveedor; abrirModalEditar()" title="Editar">
+              ✏️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mensaje si no hay proveedores -->
+  <div class="sin-proveedores" *ngIf="proveedores.length === 0">
+    <p>No hay proveedores registrados</p>
+    <button class="btn-agregar" (click)="abrirModalAgregar()">
+      <span class="icon">+</span> Agregar Primer Proveedor
+    </button>
+  </div>
+
+  <!-- Modal Contactar Proveedor -->
+  <div class="modal-overlay" *ngIf="mostrarModalContactar" (click)="cerrarModalContactar()">
+    <div class="modal-content modal-contactar" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Contactar Proveedor</h2>
+        <button class="close-button" (click)="cerrarModalContactar()">✕</button>
+      </div>
+      <div class="modal-body" *ngIf="proveedorActual">
+        <div class="info-contacto">
+          <div class="info-item">
+            <span class="label">Nombre:</span>
+            <span class="value">{{ proveedorActual.nombre }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Correo:</span>
+            <span class="value">{{ proveedorActual.correo || 'No disponible' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Teléfono:</span>
+            <span class="value">{{ proveedorActual.telefono || 'No disponible' }}</span>
+          </div>
+        </div>
+        <div class="productos-proveedor">
+          <h3>Productos suministrados</h3>
+          <div class="lista-productos">
+            <div *ngFor="let producto of getProductosProveedor()" class="producto-item-modal">
+              <span class="producto-nombre-modal">{{ producto.nombre }}</span>
+              <span class="producto-precio-modal">${{ producto.precio?.toLocaleString() }}</span>
+            </div>
+            <div *ngIf="getProductosProveedor().length === 0" class="no-productos-modal">
+              <p>Sin productos asociados</p>
             </div>
           </div>
         </div>
-      </main>
-    </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Proveedor -->
+  <div class="modal-overlay" *ngIf="mostrarModalEditar" (click)="cerrarModalEditar()">
+    <div class="modal-content modal-editar" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Editar Proveedor</h2>
+        <button class="close-button" (click)="cerrarModalEditar()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nombre *</label>
+          <input type="text" [(ngModel)]="proveedorTemp.nombre" class="form-input" placeholder="Nombre del proveedor">
+        </div>
+        <div class="form-group">
+          <label>Correo</label>
+          <input type="email" [(ngModel)]="proveedorTemp.correo" class="form-input" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" [(ngModel)]="proveedorTemp.telefono" class="form-input" placeholder="Número de teléfono">
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancelar" (click)="cerrarModalEditar()">Cancelar</button>
+          <button class="btn-guardar" (click)="guardarEdicion()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Agregar Proveedor -->
+  <div class="modal-overlay" *ngIf="mostrarModalAgregar" (click)="cerrarModalAgregar()">
+    <div class="modal-content modal-agregar" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Agregar Proveedor</h2>
+        <button class="close-button" (click)="cerrarModalAgregar()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nombre *</label>
+          <input type="text" [(ngModel)]="proveedorTemp.nombre" class="form-input" placeholder="Nombre del proveedor">
+        </div>
+        <div class="form-group">
+          <label>Correo</label>
+          <input type="email" [(ngModel)]="proveedorTemp.correo" class="form-input" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" [(ngModel)]="proveedorTemp.telefono" class="form-input" placeholder="Número de teléfono">
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancelar" (click)="cerrarModalAgregar()">Cancelar</button>
+          <button class="btn-guardar" (click)="agregarProveedor()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

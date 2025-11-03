@@ -1,0 +1,167 @@
+<div class="reportes-container">
+  <div class="header-section">
+    <h1>Panel de Reportes y Estadísticas</h1>
+    <div class="header-actions">
+      <button class="btn-historial" (click)="irAHistorialVentas()">
+        <span class="icon">📊</span> Historial De Ventas
+      </button>
+      <button class="btn-imprimir" (click)="imprimirReporte()">
+        <span class="icon">🖨️</span> Imprimir Reporte
+      </button>
+    </div>
+  </div>
+
+  <!-- Tarjetas de Ganancias -->
+  <div class="ganancias-grid">
+    <div class="ganancia-card card-hoy">
+      <div class="card-icon">💰</div>
+      <div class="card-content">
+        <h3>Ganancias Hoy</h3>
+        <p class="monto">${{ gananciasHoy.toLocaleString() }}</p>
+      </div>
+    </div>
+    
+    <div class="ganancia-card card-semana">
+      <div class="card-icon">📈</div>
+      <div class="card-content">
+        <h3>Ganancias Última Semana</h3>
+        <p class="monto">${{ gananciasSemana.toLocaleString() }}</p>
+      </div>
+    </div>
+    
+    <div class="ganancia-card card-mes">
+      <div class="card-icon">💵</div>
+      <div class="card-content">
+        <h3>Ganancias Último Mes</h3>
+        <p class="monto">${{ gananciasMes.toLocaleString() }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid de Gráficas y Tablas -->
+  <div class="dashboard-grid">
+    <!-- Gráfica de Línea - Ventas por Día -->
+    <div class="dashboard-card card-grafica-linea">
+      <div class="card-header">
+        <h2>Ventas por Día de la Semana</h2>
+      </div>
+      <div class="card-body">
+        <div class="grafica-linea">
+          <div class="ejes">
+            <div class="eje-y">
+              <span>${{ (getMaxVentaDia()).toLocaleString() }}</span>
+              <span>${{ (getMaxVentaDia() * 0.75).toLocaleString() }}</span>
+              <span>${{ (getMaxVentaDia() * 0.5).toLocaleString() }}</span>
+              <span>${{ (getMaxVentaDia() * 0.25).toLocaleString() }}</span>
+              <span>$0</span>
+            </div>
+          </div>
+          <div class="barras-container">
+            <div class="barra-item" *ngFor="let dia of ventasPorDia">
+              <div class="barra-wrapper">
+                <div class="barra" [style.height.%]="getAlturaBarraDia(dia.monto)">
+                  <span class="valor">${{ dia.monto.toLocaleString() }}</span>
+                </div>
+              </div>
+              <span class="label-dia">{{ dia.dia }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfica Donut - Productos Más Vendidos -->
+    <div class="dashboard-card card-grafica-donut">
+      <div class="card-header">
+        <h2>Productos Más Vendidos</h2>
+      </div>
+      <div class="card-body">
+        <div class="grafica-donut">
+          <svg viewBox="0 0 200 200" class="donut-svg">
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#ecf0f1" stroke-width="40"></circle>
+            <ng-container *ngFor="let producto of productosMasVendidos; let i = index">
+              <circle 
+                cx="100" 
+                cy="100" 
+                r="80" 
+                fill="none" 
+                [attr.stroke]="getColorDonut(i)"
+                stroke-width="40"
+                [attr.stroke-dasharray]="(producto.porcentaje * 502.4 / 100) + ' 502.4'"
+                [attr.stroke-dashoffset]="getStrokeDashoffset(i)"
+                transform="rotate(-90 100 100)">
+              </circle>
+            </ng-container>
+          </svg>
+          <div class="donut-leyenda">
+            <div class="leyenda-item" *ngFor="let producto of productosMasVendidos; let i = index">
+              <span class="color-indicator" [style.background-color]="getColorDonut(i)"></span>
+              <span class="producto-nombre">{{ producto.nombre }}</span>
+              <span class="producto-porcentaje">{{ producto.porcentaje }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla Top Estudiantes -->
+    <div class="dashboard-card card-tabla">
+      <div class="card-header">
+        <h2>Top 5 Estudiantes</h2>
+      </div>
+      <div class="card-body">
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Estudiante</th>
+              <th>Compras</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let estudiante of topEstudiantes; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ estudiante.nombre }}</td>
+              <td>{{ estudiante.compras }}</td>
+              <td class="monto-cell">${{ estudiante.total.toLocaleString() }}</td>
+            </tr>
+            <tr *ngIf="topEstudiantes.length === 0">
+              <td colspan="4" class="no-datos">No hay datos disponibles</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tabla Top Productos -->
+    <div class="dashboard-card card-tabla">
+      <div class="card-header">
+        <h2>Top 5 Productos</h2>
+      </div>
+      <div class="card-body">
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Producto</th>
+              <th>Vendidos</th>
+              <th>Ganancia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of topProductos; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.vendidos }}</td>
+              <td class="monto-cell">${{ producto.ganancia.toLocaleString() }}</td>
+            </tr>
+            <tr *ngIf="topProductos.length === 0">
+              <td colspan="4" class="no-datos">No hay datos disponibles</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

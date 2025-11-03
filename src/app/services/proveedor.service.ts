@@ -62,4 +62,22 @@ export class ProveedorService {
   getProveedores(): Proveedor[] {
     return this.proveedores;
   }
+
+  actualizarProveedor(id: number, proveedorActualizado: Proveedor): void {
+    const index = this.proveedores.findIndex(p => p.idProvedor === id);
+    if (index !== -1) {
+      const actualizado = Object.assign(new Proveedor(), proveedorActualizado);
+      actualizado.idProvedor = id;
+      this.proveedores[index] = actualizado;
+    }
+  }
+
+  agregarProveedor(proveedor: Proveedor): void {
+    const nuevoId = this.proveedores.length > 0 
+      ? Math.max(...this.proveedores.map(p => p.idProvedor || 0)) + 1 
+      : 1;
+    const nuevoProveedor = Object.assign(new Proveedor(), proveedor);
+    nuevoProveedor.idProvedor = nuevoId;
+    this.proveedores.push(nuevoProveedor);
+  }
 }

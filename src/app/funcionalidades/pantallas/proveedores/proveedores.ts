@@ -1,63 +1,114 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Proveedor } from '../../../models/proveedor';
 import { ProveedorService } from '../../../services/proveedor.service';
-import { Navbar } from '../../navbar/navbar';
-import { UsuarioData } from '../../usuario-data/usuario-data';
 import { ProductoService } from '../../../services/producto.service';
 
 @Component({
   selector: 'app-proveedores',
   standalone: true,
-  imports: [CommonModule, Navbar, UsuarioData],
+  imports: [CommonModule, FormsModule],
   templateUrl: './proveedores.html',
   styleUrls: [`./proveedores.css`]
 })
 export class Proveedores {
   proveedores: Proveedor[] = [];
-  selectedProveedor: Proveedor | null = null;
+  proveedorActual: Proveedor | null = null;
+  indiceActual: number = 0;
+  vistaActual: 'carrusel' | 'tabla' = 'carrusel';
   
-  proveedoresAdaptados: any[] = [];
+  // Para modales
+  mostrarModalContactar: boolean = false;
+  mostrarModalEditar: boolean = false;
+  mostrarModalAgregar: boolean = false;
+  
+  // Proveedor temporal para edición/creación
+  proveedorTemp: Proveedor = new Proveedor();
   
   constructor(
     private proveedorService: ProveedorService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private router: Router
   ) {
-    // Obtener los proveedores del servicio
     this.proveedores = this.proveedorService.getProveedores();
-    
-    // Adaptar la estructura de los proveedores para que sea compatible con el navbar
-    this.proveedoresAdaptados = this.proveedores.map(proveedor => ({
-      id: proveedor.idProvedor,
-      username: proveedor.nombre || `Proveedor #${proveedor.idProvedor}`,
-      // Mantenemos una referencia al proveedor original
-      original: proveedor
-    }));
+    if (this.proveedores.length > 0) {
+      this.proveedorActual = this.proveedores[0];
+    }
   }
   
-  onUserSelected(objetoSeleccionado: any) {
-    if (!objetoSeleccionado) {
-      return null;
+  cambiarProveedor(direccion: number) {
+    this.indiceActual += direccion;
+    
+    if (this.indiceActual < 0) {
+      this.indiceActual = this.proveedores.length - 1;
+    } else if (this.indiceActual >= this.proveedores.length) {
+      this.indiceActual = 0;
     }
     
-    console.log('Objeto seleccionado:', objetoSeleccionado);
-    
-    // Si el objeto tiene la propiedad 'original', es el objeto adaptado del navbar
-    if (objetoSeleccionado.original) {
-      this.selectedProveedor = objetoSeleccionado.original;
-      console.log('Proveedor seleccionado:', this.selectedProveedor);
-      return this.selectedProveedor;
-    } 
-    // Si no tiene 'original', puede ser el objeto en sí
-    else {
-      const proveedorSeleccionado = this.proveedores.find(p => p.idProvedor === objetoSeleccionado.id);
-      if (proveedorSeleccionado) {
-        this.selectedProveedor = proveedorSeleccionado;
-        console.log('Proveedor encontrado por ID:', proveedorSeleccionado);
-        return proveedorSeleccionado;
-      }
+    this.proveedorActual = this.proveedores[this.indiceActual];
+  }
+  
+  cambiarVista() {
+    this.vistaActual = this.vistaActual === 'carrusel' ? 'tabla' : 'carrusel';
+  }
+  
+  abrirModalContactar() {
+    this.mostrarModalContactar = true;
+  }
+  
+  cerrarModalContactar() {
+    this.mostrarModalContactar = false;
+  }
+  
+  abrirModalEditar() {
+    if (this.proveedorActual) {
+      this.proveedorTemp = Object.assign(new Proveedor(), this.proveedorActual);
+      this.mostrarModalEditar = true;
     }
+  }
+  
+  cerrarModalEditar() {
+    this.mostrarModalEditar = false;
+  }
+  
+  abrirModalAgregar() {
+    this.proveedorTemp = new Proveedor();
+    this.mostrarModalAgregar = true;
+  }
+  
+  cerrarModalAgregar() {
+    this.mostrarModalAgregar = false;
+  }
+  
+  guardarEdicion() {
+    if (this.proveedorTemp.idProvedor) {
+      this.proveedorService.actualizarProveedor(this.proveedorTemp.idProvedor, this.proveedorTemp);
+      this.proveedores = this.proveedorService.getProveedores();
+      this.proveedorActual = this.proveedores[this.indiceActual];
+      this.cerrarModalEditar();
+    }
+  }
+  
+  agregarProveedor() {
+    if (this.proveedorTemp.nombre && this.proveedorTemp.nombre.trim() !== '') {
+      this.proveedorService.agregarProveedor(this.proveedorTemp);
+      this.proveedores = this.proveedorService.getProveedores();
+      this.indiceActual = this.proveedores.length - 1;
+      this.proveedorActual = this.proveedores[this.indiceActual];
+      this.cerrarModalAgregar();
+    } else {
+      alert('El nombre del proveedor es obligatorio');
+    }
+  }
+  
+  getProductosProveedor(): any[] {
+    if (!this.proveedorActual || !this.proveedorActual.productos) return [];
     
-    return this.selectedProveedor;
+    return this.proveedorActual.productos.map(idProducto => {
+      const producto = this.productoService.getProductoById(idProducto);
+      return producto || { idProducto, nombre: 'Producto no encontrado' };
+    });
   }
 }

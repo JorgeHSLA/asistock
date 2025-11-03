@@ -12,6 +12,7 @@ import { BuscarEstudiante } from './funcionalidades/pantallas/estudiantes/buscar
 import { EditarEstudiante } from './funcionalidades/pantallas/estudiantes/editar-estudiante/editar-estudiante';
 import { NuevaVenta } from './funcionalidades/pantallas/ventas/nueva-venta/nueva-venta';
 import { Alarmas } from './funcionalidades/pantallas/alarmas/alarmas';
+import { Reportes } from './funcionalidades/pantallas/reportes/reportes';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,5 +28,6 @@ export const routes: Routes = [
     { path: 'nueva-venta', component: NuevaVenta },
     { path: 'compras', component: Compras },
     { path: 'proveedores', component: Proveedores },
+    { path: 'reportes', component: Reportes },
     { path: 'alarmas', component: Alarmas },
 ];
