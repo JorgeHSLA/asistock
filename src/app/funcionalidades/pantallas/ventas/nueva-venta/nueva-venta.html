@@ -68,47 +68,89 @@
 
     <!-- Nombre del cliente -->
     <div class="cliente-section">
-      <div class="cliente-header">
-        <h3 class="section-title">Cliente</h3>
-        <button 
-          class="btn-limpiar" 
-          *ngIf="estudiante" 
-          (click)="limpiarEstudiante()"
-          title="Escribir nombre manualmente"
-        >
-          ✕ Limpiar
-        </button>
-      </div>
-
-      <div class="input-group">
-        <input 
-          type="text" 
-          class="form-control cliente-input"
-          [(ngModel)]="busquedaEstudiante"
-          (input)="filtrarEstudiantes()"
-          (focus)="mostrarListaEstudiantes = busquedaEstudiante.length > 0"
-          placeholder="Buscar estudiante o escribir nombre del cliente"
-        >
-      </div>
-
-      <!-- Etiqueta si es estudiante seleccionado -->
-      <div class="estudiante-seleccionado" *ngIf="estudiante">
-        <span class="tag-estudiante">
-          Estudiante: {{ estudiante.nombre }} ({{ estudiante.curso }})
-          <span class="saldo-tag">Saldo: ${{ estudiante.saldo?.toLocaleString('es-CO') }}</span>
-        </span>
-      </div>
+      <h3 class="section-title">Cliente</h3>
       
-      <!-- Lista de estudiantes filtrados -->
-      <div class="estudiantes-dropdown" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length > 0 && !estudiante">
-        <div 
-          *ngFor="let est of estudiantesFiltrados" 
-          class="estudiante-item"
-          (click)="seleccionarEstudiante(est)"
-        >
-          <span>{{ est.nombre }} - {{ est.curso }}</span>
-          <span class="saldo-estudiante">${{ est.saldo?.toLocaleString('es-CO') }}</span>
+      <!-- Selector de tipo de cliente -->
+      <div class="tipo-cliente-selector">
+        <label class="radio-option">
+          <input 
+            type="radio" 
+            name="tipoCliente" 
+            [value]="'estudiante'"
+            [(ngModel)]="tipoCliente"
+            (change)="cambiarTipoCliente()"
+          >
+          <span class="radio-label">Estudiante registrado</span>
+        </label>
+        
+        <label class="radio-option">
+          <input 
+            type="radio" 
+            name="tipoCliente" 
+            [value]="'otro'"
+            [(ngModel)]="tipoCliente"
+            (change)="cambiarTipoCliente()"
+          >
+          <span class="radio-label">Cliente no registrado</span>
+        </label>
+      </div>
+
+      <!-- Opción: Estudiante registrado -->
+      <div class="opcion-estudiante" *ngIf="tipoCliente === 'estudiante'">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control cliente-input"
+            [(ngModel)]="busquedaEstudiante"
+            (input)="filtrarEstudiantes()"
+            (focus)="mostrarListaEstudiantes = true"
+            placeholder="Buscar estudiante por nombre"
+          >
         </div>
+
+        <!-- Estudiante seleccionado -->
+        <div class="estudiante-seleccionado" *ngIf="estudiante">
+          <div class="tag-estudiante">
+            <div class="estudiante-info-tag">
+              <span class="nombre-tag">{{ estudiante.nombre }}</span>
+              <span class="curso-tag">{{ estudiante.curso }}</span>
+            </div>
+            <span class="saldo-tag">Saldo: ${{ estudiante.saldo?.toLocaleString('es-CO') }}</span>
+            <button class="btn-limpiar-tag" (click)="limpiarEstudiante()" title="Cambiar estudiante">✕</button>
+          </div>
+        </div>
+        
+        <!-- Lista de estudiantes filtrados -->
+        <div class="estudiantes-dropdown" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length > 0 && !estudiante">
+          <div 
+            *ngFor="let est of estudiantesFiltrados" 
+            class="estudiante-item"
+            (click)="seleccionarEstudiante(est)"
+          >
+            <div class="estudiante-info-dropdown">
+              <span class="nombre-dropdown">{{ est.nombre }}</span>
+              <span class="curso-dropdown">{{ est.curso }}</span>
+            </div>
+            <span class="saldo-dropdown">${{ est.saldo?.toLocaleString('es-CO') }}</span>
+          </div>
+        </div>
+
+        <div class="no-estudiantes" *ngIf="mostrarListaEstudiantes && estudiantesFiltrados.length === 0 && busquedaEstudiante.length > 0">
+          <p>No se encontraron estudiantes</p>
+        </div>
+      </div>
+
+      <!-- Opción: Cliente no registrado -->
+      <div class="opcion-otro-cliente" *ngIf="tipoCliente === 'otro'">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control cliente-input"
+            [(ngModel)]="nombreCliente"
+            placeholder="Escribir nombre del cliente"
+          >
+        </div>
+        <p class="info-text">El pago se realizará en efectivo</p>
       </div>
     </div>
 

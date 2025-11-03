@@ -31,17 +31,67 @@
           <span>🧾</span>
         </div>
         <div class="venta-info">
-          <h3>{{ venta.nombreEstudiante }}</h3>
-          <p class="fecha">{{ formatearFecha(venta.fecha) }}</p>
-          <p class="total">Total: ${{ venta.total }}</p>
+          <h3>{{ venta.nombreEstudiante }} - ${{ venta.total?.toLocaleString() }}</h3>
+          <p>{{ formatearFecha(venta.fecha) }}</p>
         </div>
-        <button class="edit-button" (click)="verDetalleVenta(venta); $event.stopPropagation()">
-          <span class="icon">✏️</span>
+        <button class="view-button" (click)="verDetalleVenta(venta); $event.stopPropagation()">
+          <span class="icon">👁️</span>
         </button>
       </div>
 
       <div *ngIf="ventasFiltradas.length === 0" class="no-ventas">
         <p>No se encontraron ventas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de detalle de venta -->
+  <div class="modal-overlay" *ngIf="ventaSeleccionada" (click)="cerrarDetalle()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Detalle de Venta #{{ ventaSeleccionada.idVenta }}</h2>
+        <button class="close-button" (click)="cerrarDetalle()">✕</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="detalle-section">
+          <h3>Información General</h3>
+          <div class="detalle-item">
+            <span class="label">Fecha:</span>
+            <span class="value">{{ formatearFecha(ventaSeleccionada.fecha) }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="label">Cliente:</span>
+            <span class="value">{{ ventaSeleccionada.nombreEstudiante }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="label">Curso:</span>
+            <span class="value">{{ ventaSeleccionada.cursoEstudiante }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="label">Método de Pago:</span>
+            <span class="value">{{ ventaSeleccionada.metodoPago }}</span>
+          </div>
+        </div>
+
+        <div class="detalle-section">
+          <h3>Productos Vendidos</h3>
+          <div class="productos-vendidos">
+            <div *ngFor="let item of getProductosVendidos(ventaSeleccionada)" class="producto-vendido">
+              <span class="producto-nombre">{{ item.nombre }}</span>
+              <span class="producto-cantidad">x{{ item.cantidad }}</span>
+              <span class="producto-precio">${{ item.precio?.toLocaleString() }}</span>
+              <span class="producto-subtotal">${{ (item.precio! * item.cantidad).toLocaleString() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detalle-section total-section">
+          <div class="detalle-item total">
+            <span class="label">Total:</span>
+            <span class="value">${{ ventaSeleccionada.total?.toLocaleString() }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

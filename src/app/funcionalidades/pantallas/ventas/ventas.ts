@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { VentaService } from '../../../services/venta.service';
+import { ProductoService } from '../../../services/producto.service';
 import { Venta } from '../../../models/venta';
+import { Producto } from '../../../models/producto';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -17,9 +19,11 @@ export class Ventas {
   ventas: Venta[] = [];
   ventasFiltradas: Venta[] = [];
   terminoBusqueda: string = '';
+  ventaSeleccionada: Venta | null = null;
 
   constructor(
     private ventaService: VentaService,
+    private productoService: ProductoService,
     private router: Router,
     private datePipe: DatePipe
   ) {
@@ -47,9 +51,24 @@ export class Ventas {
   }
 
   verDetalleVenta(venta: Venta) {
-    // Aquí puedes implementar la navegación a una página de detalle
-    console.log('Ver detalle de venta:', venta);
-    // Por ejemplo: this.router.navigate(['/ventas/detalle', venta.idVenta]);
+    this.ventaSeleccionada = venta;
+  }
+
+  cerrarDetalle() {
+    this.ventaSeleccionada = null;
+  }
+
+  getProductosVendidos(venta: Venta): any[] {
+    if (!venta.productosVendidos) return [];
+    
+    return Object.entries(venta.productosVendidos).map(([idProducto, cantidad]) => {
+      const producto = this.productoService.getProductoById(parseInt(idProducto));
+      return {
+        nombre: producto?.nombre || 'Producto no encontrado',
+        cantidad: cantidad,
+        precio: producto?.precio || 0
+      };
+    });
   }
 
   navegarNuevaVenta() {

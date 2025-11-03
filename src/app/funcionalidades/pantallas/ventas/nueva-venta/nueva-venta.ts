@@ -27,6 +27,7 @@ export class NuevaVenta {
   estudiante: Estudiante | null = null;
   nombreCliente: string = '';
   productosVenta: ProductoVenta[] = []; // Iniciar vacío
+  tipoCliente: 'estudiante' | 'otro' = 'estudiante'; // Tipo de cliente seleccionado
   
   // Listas disponibles
   estudiantes: Estudiante[] = [];
@@ -45,6 +46,16 @@ export class NuevaVenta {
   ) {
     this.estudiantes = this.estudianteService.getEstudiantes();
     this.productos = this.productoService.getProductos().filter(p => p.activo);
+  }
+
+  // Cambiar tipo de cliente
+  cambiarTipoCliente() {
+    // Limpiar datos al cambiar de tipo
+    this.estudiante = null;
+    this.busquedaEstudiante = '';
+    this.nombreCliente = '';
+    this.estudiantesFiltrados = [];
+    this.mostrarListaEstudiantes = false;
   }
 
   // Filtrar estudiantes mientras se escribe
@@ -122,10 +133,17 @@ export class NuevaVenta {
 
   // Terminar venta
   terminarVenta() {
-    // Validaciones
-    if (!this.estudiante && this.nombreCliente.trim() === '') {
-      alert('Debe seleccionar un estudiante o ingresar el nombre del cliente');
-      return;
+    // Validaciones según el tipo de cliente
+    if (this.tipoCliente === 'estudiante') {
+      if (!this.estudiante) {
+        alert('Debe seleccionar un estudiante de la lista');
+        return;
+      }
+    } else {
+      if (this.nombreCliente.trim() === '') {
+        alert('Debe ingresar el nombre del cliente');
+        return;
+      }
     }
 
     const productosVendidos: Record<number, number> = {};
@@ -147,9 +165,9 @@ export class NuevaVenta {
     const nuevaVenta = new Venta({
       fecha: this.ventaFecha,
       idEstudiante: this.estudiante?.idEstudiante,
-      nombreEstudiante: this.estudiante ? this.estudiante.nombre : this.nombreCliente,
+      nombreEstudiante: this.tipoCliente === 'estudiante' ? this.estudiante!.nombre : this.nombreCliente,
       cursoEstudiante: this.estudiante?.curso || 'N/A',
-      metodoPago: this.estudiante ? 'Saldo' : 'Efectivo',
+      metodoPago: this.tipoCliente === 'estudiante' ? 'Saldo' : 'Efectivo',
       valorExtra: 0,
       total: this.totalVenta,
       productosVendidos: productosVendidos
