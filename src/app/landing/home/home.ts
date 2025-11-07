@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BigBox } from "../big-box/big-box";
 import { SmallBox } from '../small-box/small-box';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Home {
   currentSlide = 0;
+  private readonly STORAGE_KEY = 'home.carousel.currentSlide';
   
   // Pantalla 1: Historial Ventas, Historial Compra Proveedores, Proveedores, Trabajadores, Locales
   slide1 = [
@@ -43,13 +44,45 @@ export class Home {
 
   nextSlide() {
     this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    this.saveCurrentSlide();
   }
 
   prevSlide() {
     this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+    this.saveCurrentSlide();
   }
 
   goToSlide(index: number) {
     this.currentSlide = index;
+    this.saveCurrentSlide();
+  }
+
+  ngOnInit(): void {
+    this.loadCurrentSlide();
+  }
+
+  private loadCurrentSlide(): void {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return;
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      if (!raw) return;
+      const idx = parseInt(raw, 10);
+      if (!isNaN(idx) && idx >= 0 && idx < this.slides.length) {
+        this.currentSlide = idx;
+      }
+    } catch (e) {
+      // silenciar errores de acceso a localStorage (onda SSR o privacidad)
+      console.warn('Could not load carousel index from storage', e);
+    }
+  }
+
+  private saveCurrentSlide(): void {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return;
+      localStorage.setItem(this.STORAGE_KEY, String(this.currentSlide));
+    } catch (e) {
+      // silenciar errores (p. ej. storage deshabilitado)
+      console.warn('Could not save carousel index to storage', e);
+    }
   }
 }
