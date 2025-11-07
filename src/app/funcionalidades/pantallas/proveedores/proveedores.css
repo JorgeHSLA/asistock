@@ -1,6 +1,6 @@
 .proveedores-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #ffffff;
   padding: 140px 2rem 2rem;
 }
 
@@ -9,6 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2rem;
   margin-bottom: 3rem;
   padding: 0 1rem;
 }
@@ -27,7 +28,7 @@
 
 .btn-toggle-vista {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   color: white;
   border: none;
   border-radius: 12px;
@@ -42,12 +43,12 @@
 
 .btn-toggle-vista:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.4);
 }
 
 .btn-agregar {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: #004b4d;
   color: white;
   border: none;
   border-radius: 12px;
@@ -67,7 +68,7 @@
 
 .btn-agregar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.4);
 }
 
 /* Carrusel Container */
@@ -93,27 +94,29 @@
 .btn-nav {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* White circular background with subtle shadow so the black arrow is visible */
+  background: #ffffff;
   border: none;
   border-radius: 50%;
-  color: white;
+  color: #000;
   font-size: 2.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .btn-nav:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
 .btn-nav span {
   line-height: 1;
   display: block;
+  color: #000; /* flechas en negro */
 }
 
 /* Proveedor Cards */
@@ -142,7 +145,7 @@
   width: 450px;
   transform: scale(1);
   opacity: 1;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: #ffffff;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
@@ -150,7 +153,7 @@
   width: 100px;
   height: 100px;
   margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -214,23 +217,23 @@
 }
 
 .btn-contactar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   color: white;
 }
 
 .btn-contactar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.4);
 }
 
 .btn-editar {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #004b4d;
   color: white;
 }
 
 .btn-editar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.4);
 }
 
 /* Tabla View */
@@ -247,7 +250,7 @@
 }
 
 .tabla-proveedores thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   color: white;
 }
 
@@ -293,21 +296,21 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   color: white;
 }
 
 .btn-tabla:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 75, 77, 0.4);
 }
 
 .btn-editar-tabla {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #004b4d;
 }
 
 .btn-editar-tabla:hover {
-  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 75, 77, 0.4);
 }
 
 /* Sin Proveedores */
@@ -378,7 +381,7 @@
   align-items: center;
   padding: 1.5rem 2rem;
   border-bottom: 2px solid #ecf0f1;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   border-radius: 20px 20px 0 0;
 }
 
@@ -423,7 +426,7 @@
   justify-content: space-between;
   padding: 1rem;
   margin-bottom: 0.75rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #ffffff;
   border-radius: 12px;
 }
 
@@ -454,14 +457,14 @@
   justify-content: space-between;
   padding: 0.875rem 1rem;
   margin-bottom: 0.5rem;
-  background: #f8f9fa;
+  background: #ffffff;
   border-radius: 10px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #004b4d;
   transition: all 0.3s ease;
 }
 
 .producto-item-modal:hover {
-  background: #ecf0f1;
+  background: #f8f9fa;
   transform: translateX(5px);
 }
 
@@ -507,8 +510,8 @@
 
 .form-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #004b4d;
+  box-shadow: 0 0 0 3px rgba(0, 75, 77, 0.1);
 }
 
 /* Modal Actions */
@@ -521,7 +524,7 @@
 
 .btn-cancelar {
   padding: 0.75rem 1.5rem;
-  background: #95a5a6;
+  background: #004b4d;
   color: white;
   border: none;
   border-radius: 12px;
@@ -532,13 +535,13 @@
 }
 
 .btn-cancelar:hover {
-  background: #7f8c8d;
+  background: #003a3b;
   transform: translateY(-2px);
 }
 
 .btn-guardar {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: #004b4d;
   color: white;
   border: none;
   border-radius: 12px;
@@ -550,7 +553,7 @@
 
 .btn-guardar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.4);
 }
 
 /* Responsive */

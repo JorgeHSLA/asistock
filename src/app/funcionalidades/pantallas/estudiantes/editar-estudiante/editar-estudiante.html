@@ -64,7 +64,7 @@
               <span class="icon">✓</span> Guardar cambios
             </button>
             <button class="btn-danger" (click)="eliminarEstudiante()">
-              <span class="icon">🗑️</span> Eliminar producto
+              <span class="icon">🗑️</span> Eliminar estudiante
             </button>
           </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="image-preview" [class.has-image]="imagenPreview">
               <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Preview">
               <span *ngIf="!imagenPreview" class="placeholder-text">
-                Selecciona una imagen para el producto
+                Selecciona una imagen del estudiante
               </span>
             </div>
             <input 

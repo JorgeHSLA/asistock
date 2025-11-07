@@ -3,8 +3,8 @@
     <h1>Proveedores</h1>
     <div class="header-actions">
       <button class="btn-toggle-vista" (click)="cambiarVista()">
-        <span *ngIf="vistaActual === 'carrusel'">📋 Ver Tabla</span>
-        <span *ngIf="vistaActual === 'tabla'">🎠 Ver Carrusel</span>
+        <span *ngIf="vistaActual === 'carrusel'">Ver Tabla</span>
+        <span *ngIf="vistaActual === 'tabla'">Ver Carrusel</span>
       </button>
       <button class="btn-agregar" (click)="abrirModalAgregar()">
         <span class="icon">+</span> Agregar Proveedor
@@ -22,8 +22,8 @@
       <!-- Tarjetas laterales (previo y siguiente) -->
       <div class="proveedor-card card-lateral card-izquierda">
         <div class="card-icon">
-          <span>🐛</span>
-        </div>
+            <span></span>
+          </div>
         <h3>{{ proveedores[(indiceActual - 1 + proveedores.length) % proveedores.length].nombre }}</h3>
         <p>{{ proveedores[(indiceActual - 1 + proveedores.length) % proveedores.length].correo || 'Sin correo' }}</p>
       </div>
@@ -31,17 +31,17 @@
       <!-- Tarjeta central (proveedor actual) -->
       <div class="proveedor-card card-central" *ngIf="proveedorActual">
         <div class="card-icon">
-          <span>🐛</span>
+          <span></span>
         </div>
         <h2>{{ proveedorActual.nombre }}</h2>
         <p class="empresa">{{ proveedorActual.correo || 'Sin correo' }}</p>
         
         <div class="card-actions">
           <button class="btn-action btn-contactar" (click)="abrirModalContactar()">
-            <span class="icon">📞</span> Contactar Proveedor
+            <span class="icon"></span> Contactar Proveedor
           </button>
           <button class="btn-action btn-editar" (click)="abrirModalEditar()">
-            <span class="icon">✏️</span> Editar Datos del Proveedor
+            <span class="icon"></span> Editar Datos del Proveedor
           </button>
         </div>
       </div>
@@ -49,7 +49,7 @@
       <!-- Tarjeta derecha -->
       <div class="proveedor-card card-lateral card-derecha">
         <div class="card-icon">
-          <span>🐛</span>
+          <span></span>
         </div>
         <h3>{{ proveedores[(indiceActual + 1) % proveedores.length].nombre }}</h3>
         <p>{{ proveedores[(indiceActual + 1) % proveedores.length].correo || 'Sin correo' }}</p>
@@ -83,10 +83,10 @@
           <td>{{ proveedor.cantidadProductos }}</td>
           <td class="acciones-cell">
             <button class="btn-tabla btn-ver" (click)="proveedorActual = proveedor; indiceActual = proveedores.indexOf(proveedor); cambiarVista()" title="Ver en carrusel">
-              👁️
+              <span class="icon"></span>
             </button>
             <button class="btn-tabla btn-editar-tabla" (click)="proveedorActual = proveedor; abrirModalEditar()" title="Editar">
-              ✏️
+              <span class="icon"></span>
             </button>
           </td>
         </tr>

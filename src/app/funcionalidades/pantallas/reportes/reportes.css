@@ -1,7 +1,15 @@
 .reportes-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 140px 2rem 2rem;
+  background: #ffffff;
+  /* Aumentado para bajar todos los items de la página de reportes */
+  padding: 180px 2rem 2rem;
+}
+
+/* Ajuste responsive: menos padding en pantallas muy pequeñas */
+@media (max-width: 600px) {
+  .reportes-container {
+    padding: 140px 1rem 1rem;
+  }
 }
 
 /* Header Section */
@@ -16,7 +24,7 @@
 .header-section h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: #004b4d;
   margin: 0;
 }
 
@@ -41,21 +49,21 @@
 }
 
 .btn-historial {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
 }
 
 .btn-historial:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.25);
 }
 
 .btn-imprimir {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #004b4d;
 }
 
 .btn-imprimir:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 75, 77, 0.25);
 }
 
 .icon {
@@ -86,16 +94,10 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-.card-hoy {
-  border-left: 6px solid #11998e;
-}
-
-.card-semana {
-  border-left: 6px solid #667eea;
-}
-
+.card-hoy,
+.card-semana,
 .card-mes {
-  border-left: 6px solid #f093fb;
+  border-left: 6px solid #004b4d;
 }
 
 .card-icon {
@@ -105,14 +107,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #004b4d;
   border-radius: 50%;
 }
 
 .card-content h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #7f8c8d;
+  color: #004b4d;
   margin: 0 0 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -121,7 +123,7 @@
 .card-content .monto {
   font-size: 2rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: #004b4d;
   margin: 0;
 }
 
@@ -145,7 +147,7 @@
 }
 
 .card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   padding: 1.5rem 2rem;
   color: white;
 }
@@ -224,7 +226,7 @@
 .barra {
   width: 60%;
   min-height: 5%;
-  background: linear-gradient(to top, #667eea 0%, #764ba2 100%);
+  background: #004b4d;
   border-radius: 8px 8px 0 0;
   position: relative;
   transition: all 0.3s ease;
@@ -303,7 +305,7 @@
 
 .producto-porcentaje {
   font-weight: 700;
-  color: #667eea;
+  color: #004b4d;
   font-size: 1rem;
 }
 
@@ -314,14 +316,14 @@
 }
 
 .tabla-reporte thead {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #004b4d;
 }
 
 .tabla-reporte th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #2c3e50;
+  color: #ffffff;
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -355,12 +357,12 @@
 .tabla-reporte td:first-child {
   text-align: center;
   font-weight: 700;
-  color: #667eea;
+  color: #004b4d;
 }
 
 .monto-cell {
   font-weight: 600;
-  color: #11998e;
+  color: #004b4d;
 }
 
 .no-datos {

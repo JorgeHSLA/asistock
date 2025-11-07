@@ -6,7 +6,7 @@
   min-height: 0;
   max-height: none;
   margin: 0 auto; /* Centrar el carrusel */
-  margin-top: 140px; /* Espacio para el header fijo */
+  margin-top: 180px; /* Espacio para el header fijo (aumentado para bajar items) */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -87,10 +87,36 @@
   background: transparent;
 }
 
+/* Contador del carrusel */
+.carousel-counter {
+  text-align: center;
+  /* Subir mucho más: margen negativo para colocarlo sobre/pegado al carrusel */
+  margin-top: -18px;
+  color: #004b4d;
+  font-weight: 600;
+  font-size: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .carousel-counter {
+    margin-top: -14px;
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-counter {
+    margin-top: -10px;
+    font-size: 0.95rem;
+  }
+}
+
 .carousel-button {
   background: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.6);
-  color: white;
+  color: #000; /* Flechas en negro */
   font-size: 36px;
   width: 60px;
   height: 80px;
@@ -105,9 +131,10 @@
 }
 
 .carousel-button:hover {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.65);
   transform: translateY(-50%) scale(1.05);
-  border-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #000;
 }
 
 .carousel-button:active {
@@ -155,7 +182,7 @@
     min-height: 0;
     max-height: none;
     width: 90vw;
-    margin-top: 140px; /* Mantener espacio para el header fijo en móvil */
+    margin-top: 160px; /* Mantener espacio para el header fijo en móvil (ajustado) */
   }
   .carousel-button {
     width: 45px;
